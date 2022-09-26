@@ -83,5 +83,11 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>leek-local-mvn-repo</id>
+            <url>file:D:\WorkFile\MavenPepository</url>
+        </repository>
+    </distributionManagement>
 
 </project>

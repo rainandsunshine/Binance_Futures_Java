@@ -11,10 +11,22 @@ import org.slf4j.LoggerFactory;
 import com.binance.client.exception.BinanceApiException;
 import com.binance.client.impl.utils.JsonWrapper;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
+import java.util.concurrent.TimeUnit;
+
 abstract class RestApiInvoker {
 
     private static final Logger log = LoggerFactory.getLogger(RestApiInvoker.class);
-    private static final OkHttpClient client = new OkHttpClient();
+    // 设置代理地址
+    private static SocketAddress sa = new InetSocketAddress("127.0.0.1", 7890);
+    private static final OkHttpClient client = new OkHttpClient.Builder()
+            .proxy(new Proxy(Proxy.Type.HTTP,sa))
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build();
 
     static void checkResponse(JsonWrapper json) {
         try {
